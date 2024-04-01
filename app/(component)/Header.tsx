@@ -1,4 +1,5 @@
 import React from "react";
+import { logoFont } from "../layout";
 
 type Props = {};
 
@@ -8,19 +9,21 @@ const Header = (props: Props) => {
       {/* logo */}
       <div>
         <a href="/">
-          <h1 className="text-2xl font-semibold">UNIVERSAL DOWNLOADER</h1>
+          <h1 className={`text-2xl font-semibold ${logoFont.className}`}>
+            Universal Downloader
+          </h1>
         </a>
       </div>
       {/* other nav links */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 font-light">
         <a href="/about">
-          <h3 className="uppercase text-md">About us</h3>
+          <h3 className="uppercase text-sm">About us</h3>
         </a>
         <a href="/usage">
-          <h3 className="uppercase text-md">How to use</h3>
+          <h3 className="uppercase text-sm">How to use</h3>
         </a>
         <a href="/faq">
-          <h3 className="uppercase text-md">FAQs</h3>
+          <h3 className="uppercase text-sm">FAQs</h3>
         </a>
       </div>
     </nav>

@@ -7,7 +7,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -65,7 +64,7 @@ const DownloadForm = (props: Props) => {
   }
 
   return (
-    <div className="absolute w-1/2 rounded-xl left-1/2 top-[45%] -translate-x-1/2 -translate-y-[45%]">
+    <div className="absolute w-2/3 rounded-xl left-1/2 top-[45%] -translate-x-1/2 -translate-y-[45%]">
       {!videoData.data ? (
         <Form {...form}>
           <form
@@ -73,7 +72,7 @@ const DownloadForm = (props: Props) => {
             className="w-full space-y-6 flex flex-col "
           >
             <h1 className="text-4xl text-center mb-10">
-              Download Tiktok Videos
+              Download Tiktok Videos in HD quality
             </h1>
             <FormField
               control={form.control}
@@ -94,16 +93,16 @@ const DownloadForm = (props: Props) => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-[160px] mx-auto h-12 text-sm"
+              className="w-[160px] mx-auto h-12 text-sm font-bold "
             >
               {!!isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Download Now
+              Get Video
             </Button>
           </form>
         </Form>
       ) : (
         // video actions
-        <VideoContainer videoData={videoData} />
+        <VideoContainer videoData={videoData} setVideoData={setVideoData} />
       )}
     </div>
   );
