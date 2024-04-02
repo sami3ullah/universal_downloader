@@ -1,9 +1,10 @@
 import React from "react";
-import { logoFont } from "../../layout";
+import { Pacifico } from "next/font/google";
 import NavLinks from "./NavLinks";
 
 type Props = {};
 
+const logoFont = Pacifico({ subsets: ["latin"], weight: "400" });
 const Header = (props: Props) => {
   return (
     <nav className="h-[100px] md:h-[80px] flex items-center justify-between px-5 md:px-10 border-b border-[#fcfcfc42] md:border-0">
