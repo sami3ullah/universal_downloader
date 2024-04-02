@@ -31,11 +31,7 @@ const VideoActions = ({ videoData }: Props) => {
     "video-cover": false,
   });
 
-  const downloadVideo = async (
-    url: string,
-    videoName: string,
-    buttonId: string
-  ) => {
+  const downloadVideo = async (url: string, buttonId: string) => {
     try {
       // setting the isLoading state for only the button on which we clicked on
       setIsLoading((prev) => ({
@@ -48,7 +44,7 @@ const VideoActions = ({ videoData }: Props) => {
       let tempUrl = URL.createObjectURL(file);
       const aTag = document.createElement("a");
       aTag.href = tempUrl;
-      aTag.download = videoName;
+      aTag.download = url.replace(/^.*[\\\/]/, "");
       document.body.appendChild(aTag);
       aTag.click();
       URL.revokeObjectURL(tempUrl);
@@ -74,11 +70,7 @@ const VideoActions = ({ videoData }: Props) => {
         <Button
           className="text-black md:text-md font-bold"
           onClick={() =>
-            downloadVideo(
-              videoData.data?.videoHd ?? "",
-              videoData.data?.title.replaceAll(" ", "_") ?? "",
-              "download-hd"
-            )
+            downloadVideo(videoData.data?.videoHd ?? "", "download-hd")
           }
         >
           {isLoading?.["download-hd"] ? (
@@ -93,7 +85,6 @@ const VideoActions = ({ videoData }: Props) => {
           onClick={() =>
             downloadVideo(
               videoData.data?.videoWithWatermark ?? "",
-              videoData.data?.title.replaceAll(" ", "_") ?? "",
               "with-watermark"
             )
           }
@@ -127,7 +118,7 @@ const VideoActions = ({ videoData }: Props) => {
               onClick={() =>
                 downloadVideo(
                   videoData.data?.videoWithoutWatermark ?? "",
-                  videoData.data?.title.replaceAll(" ", "_") ?? "",
+
                   "download-non-hd"
                 )
               }
@@ -144,7 +135,7 @@ const VideoActions = ({ videoData }: Props) => {
               onClick={() =>
                 downloadVideo(
                   videoData.data?.videoMusic ?? "",
-                  videoData.data?.title.replaceAll(" ", "_") ?? "",
+
                   "download-mp3"
                 )
               }
@@ -161,7 +152,7 @@ const VideoActions = ({ videoData }: Props) => {
               onClick={() =>
                 downloadVideo(
                   videoData.data?.videoCover ?? "",
-                  videoData.data?.title.replaceAll(" ", "_") ?? "",
+
                   "video-cover"
                 )
               }

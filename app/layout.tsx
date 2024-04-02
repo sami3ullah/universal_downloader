@@ -8,7 +8,7 @@ export const logoFont = Pacifico({ subsets: ["latin"], weight: "400" });
 export const metadata: Metadata = {
   title: "Universal downloader",
   description:
-    "Downloader Tiktok videos in HD, non-hd, without watermark, non-watermark and in mp3",
+    "Universal Downloader is an online TikTok Downloader tool, through which you can easily download TikTok videos with or without watermark and Tiktok music in mp3 format.",
 };
 
 export default function RootLayout({

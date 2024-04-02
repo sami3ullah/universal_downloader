@@ -1,12 +1,12 @@
 import React from "react";
-import Header from "../(component)/Header";
-import Footer from "../(component)/Footer";
+import Header from "./(component)/Header";
+import Footer from "./(component)/Footer";
 
 type Props = {
   children: React.ReactNode;
 };
 
-const layout = ({ children }: Props) => {
+const TiktokLayout = ({ children }: Props) => {
   return (
     <main className="h-full">
       <div className="flex flex-col h-full">
@@ -18,4 +18,4 @@ const layout = ({ children }: Props) => {
   );
 };
 
-export default layout;
+export default TiktokLayout;

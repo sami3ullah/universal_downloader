@@ -25,7 +25,7 @@ const VideoContainer = ({ videoData, setVideoData }: Props) => {
       </Button>
       {/* video here */}
       <div className="max-h-1/2 rounded-md w-full bg-black flex justify-center">
-        <video controls className="max-h-[500px]">
+        <video controls className="max-h-[400px] md:max-h-[500px]">
           <source src={videoData.data?.videoHd} />
         </video>
       </div>
