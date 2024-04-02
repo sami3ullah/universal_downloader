@@ -20,19 +20,19 @@ const page = (props: Props) => {
             </AccordionTrigger>
             <AccordionContent>
               1. Find a TikTok video you wish to download by using TikTok App or
-              TikTok's website.
+              TikTok&apos;s website.
             </AccordionContent>
             <AccordionContent>
-              2. Click on the "Share Option" of the TikTok video and select
-              "Copy Link" to copy the video's link.
+              2. Click on the &quot;Share Option&quot; of the TikTok video and
+              select &quot;Copy Link&quot; to copy the video&apos;s link.
             </AccordionContent>
             <AccordionContent>
               3. Open Universal Downloader website and Paste the copied TikTok
-              Link above and click 'Get Video' button.
+              Link above and click &quot;Get Video&quot; button.
             </AccordionContent>
             <AccordionContent>
-              4. Wait a few seconds, it'll get the video. Then click Download HD
-              button to download video in HD and without watermark.
+              4. Wait a few seconds, it&apos;ll get the video. Then click
+              Download HD button to download video in HD and without watermark.
             </AccordionContent>
           </AccordionItem>
           {/* question 2 */}
@@ -40,15 +40,15 @@ const page = (props: Props) => {
             <AccordionTrigger>How to download a non-HD video?</AccordionTrigger>
             <AccordionContent>
               1. Find a TikTok video you wish to download by using TikTok App or
-              TikTok's website.
+              TikTok&apos;s website.
             </AccordionContent>
             <AccordionContent>
-              2. Click on the "Share Option" of the TikTok video and select
-              "Copy Link" to copy the video's link.
+              2. Click on the &quot;Share Option&quot; of the TikTok video and
+              select &quot;Copy Link&quot; to copy the video&apos;s link.
             </AccordionContent>
             <AccordionContent>
               3. Open Universal Downloader website and Paste the copied TikTok
-              Link above and click 'Get Video' button.
+              Link above and click &quot;Get Video&quot; button.
             </AccordionContent>
             <AccordionContent>
               4. Wait a few seconds, it will get the video. Then click 3 dots in
@@ -64,15 +64,15 @@ const page = (props: Props) => {
             <AccordionTrigger>How to download TikTok MP3?</AccordionTrigger>
             <AccordionContent>
               1. Find a TikTok video you wish to download by using TikTok App or
-              TikTok's website.
+              TikTok&apos;s website.
             </AccordionContent>
             <AccordionContent>
-              2. Click on the "Share Option" of the TikTok video and select
-              "Copy Link" to copy the video's link.
+              2. Click on the &quot;Share Option&quot; of the TikTok video and
+              select &quot;Copy Link&quot; to copy the video&apos;s link.
             </AccordionContent>
             <AccordionContent>
               3. Open Universal Downloader website and Paste the copied TikTok
-              Link above and click 'Get Video' button.
+              Link above and click &quot;Get Video&quot; button.
             </AccordionContent>
             <AccordionContent>
               4. Wait a few seconds, it will get the video. Then click 3 dots in
@@ -99,9 +99,9 @@ const page = (props: Props) => {
             </AccordionTrigger>
             <AccordionContent>
               It depends on the Browser you are using, by the way all videos &
-              MP3 songs are saved in 'Downloads' folder on Windows and Mac or
-              Mobile. You can also press CTRL+J to view your download history in
-              the chrome.
+              MP3 songs are saved in &quot;Downloads&quot; folder on Windows and
+              Mac or Mobile. You can also press CTRL+J to view your download
+              history in the chrome.
             </AccordionContent>
           </AccordionItem>
           {/* question 5 */}
