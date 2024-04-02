@@ -17,7 +17,7 @@ const VideoContainer = ({ videoData, setVideoData }: Props) => {
     <div className="flex flex-col gap-4">
       {/* back button */}
       <Button
-        className="w-fit"
+        className="w-fit text-md"
         variant="link"
         onClick={() => setVideoData({} as TiktokClientResponse)}
       >
@@ -30,25 +30,27 @@ const VideoContainer = ({ videoData, setVideoData }: Props) => {
         </video>
       </div>
       {/* video details */}
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center justify-between">
         {/* Uploader details */}
         <div className="flex gap-4">
           <Image
             width="56"
             height="56"
-            className="rounded-full"
+            className="rounded-full w-[42px] h-[42px] md:w-[56px] md:h-[56px]"
             src={videoData.data?.authorAvatar ?? ""}
             alt="Author Image"
           />
-          <div className="flex flex-col gap-2">
-            <p>{videoData.data?.authorDisplayName}</p>
-            <p>{videoData.data?.authorUsername}</p>
+          <div className="flex flex-col gap-1">
+            <p className="text-sm md:text-md">
+              {videoData.data?.authorDisplayName}
+            </p>
+            <p className="font-light text-sm md:text-md">
+              {videoData.data?.authorUsername}
+            </p>
           </div>
         </div>
         {/* Action buttons */}
-        <div>
-          <VideoActions videoData={videoData} />
-        </div>
+        <VideoActions videoData={videoData} />
       </div>
     </div>
   );

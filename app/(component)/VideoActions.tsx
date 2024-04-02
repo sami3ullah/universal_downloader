@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 
 import React from "react";
+import { toast } from "@/components/ui/use-toast";
 
 type Props = {
   videoData: TiktokClientResponse;
@@ -27,6 +28,7 @@ const VideoActions = ({ videoData }: Props) => {
     "download-non-hd": false,
     "with-watermark": false,
     "download-mp3": false,
+    "video-cover": false,
   });
 
   const downloadVideo = async (
@@ -40,6 +42,7 @@ const VideoActions = ({ videoData }: Props) => {
         ...prev,
         [buttonId]: true,
       }));
+      // making the url downloadable
       const res = await fetch(url);
       const file = await res.blob();
       let tempUrl = URL.createObjectURL(file);
@@ -51,7 +54,11 @@ const VideoActions = ({ videoData }: Props) => {
       URL.revokeObjectURL(tempUrl);
       aTag.remove();
     } catch (err) {
-      console.log(err);
+      toast({
+        title: (err as Error).message,
+        description: "There was a problem with your request",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading((prev) => ({
         ...prev,
@@ -61,24 +68,43 @@ const VideoActions = ({ videoData }: Props) => {
   };
 
   return (
-    <div className="flex align-center justify-center gap-4">
+    <div className="flex align-center justify-between md:justify-center gap-4">
       {/* Download HD */}
-      <Button
-        className="text-black"
-        onClick={() =>
-          downloadVideo(
-            videoData.data?.videoHd ?? "",
-            videoData.data?.title.replaceAll(" ", "_") ?? "",
-            "download-hd"
-          )
-        }
-      >
-        {isLoading?.["download-hd"] ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          "Download HD (mp4)"
-        )}
-      </Button>
+      <div className="flex flex-col md:flex-row gap-4">
+        <Button
+          className="text-black md:text-md font-bold"
+          onClick={() =>
+            downloadVideo(
+              videoData.data?.videoHd ?? "",
+              videoData.data?.title.replaceAll(" ", "_") ?? "",
+              "download-hd"
+            )
+          }
+        >
+          {isLoading?.["download-hd"] ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            "Download HD (mp4)"
+          )}
+        </Button>
+        {/* Download with watermark */}
+        <Button
+          className="text-black font-bold md:text-md"
+          onClick={() =>
+            downloadVideo(
+              videoData.data?.videoWithWatermark ?? "",
+              videoData.data?.title.replaceAll(" ", "_") ?? "",
+              "with-watermark"
+            )
+          }
+        >
+          {isLoading?.["with-watermark"] ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            "Download with Watermark (mp4)"
+          )}
+        </Button>
+      </div>
       {/* More Download Option */}
       <div className="flex">
         <Popover>
@@ -86,7 +112,7 @@ const VideoActions = ({ videoData }: Props) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <EllipsisVertical />
+                  <EllipsisVertical size={30} />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>More Download Options</p>
@@ -97,7 +123,7 @@ const VideoActions = ({ videoData }: Props) => {
           <PopoverContent className="flex flex-col align-center gap-4">
             {/* Download non-hd */}
             <Button
-              className="text-black"
+              className="text-black font-bold"
               onClick={() =>
                 downloadVideo(
                   videoData.data?.videoWithoutWatermark ?? "",
@@ -112,26 +138,9 @@ const VideoActions = ({ videoData }: Props) => {
                 "Download Non-HD (mp4)"
               )}
             </Button>
-            {/* Download with watermark */}
-            <Button
-              className="text-black"
-              onClick={() =>
-                downloadVideo(
-                  videoData.data?.videoWithWatermark ?? "",
-                  videoData.data?.title.replaceAll(" ", "_") ?? "",
-                  "with-watermark"
-                )
-              }
-            >
-              {isLoading?.["with-watermark"] ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                "Download with Watermark (mp4)"
-              )}
-            </Button>
             {/* Download just the music */}
             <Button
-              className="text-black"
+              className="text-black font-bold"
               onClick={() =>
                 downloadVideo(
                   videoData.data?.videoMusic ?? "",
@@ -143,7 +152,24 @@ const VideoActions = ({ videoData }: Props) => {
               {isLoading?.["download-mp3"] ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
-                "Download (Mp3)"
+                "Download (mp3)"
+              )}
+            </Button>
+            {/* Download the video cover */}
+            <Button
+              className="text-black font-bold"
+              onClick={() =>
+                downloadVideo(
+                  videoData.data?.videoCover ?? "",
+                  videoData.data?.title.replaceAll(" ", "_") ?? "",
+                  "video-cover"
+                )
+              }
+            >
+              {isLoading?.["video-cover"] ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                "Download cover"
               )}
             </Button>
           </PopoverContent>

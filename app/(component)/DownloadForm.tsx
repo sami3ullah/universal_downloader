@@ -36,12 +36,20 @@ const DownloadForm = (props: Props) => {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    // check if there's something in the url
+    if (!data.url) {
+      toast({
+        title: "Please provide the URL for the video",
+        description: "There was a problem with your request",
+        variant: "destructive",
+      });
+      return;
+    }
     try {
       setIsLoading(true);
       const video = await downloadVideo(data);
       // if there's an error
       if (!video.success) {
-        console.log("inside");
         toast({
           title: `Uh oh! ${video.message}`,
           description: "There was a problem with your request",
@@ -64,14 +72,14 @@ const DownloadForm = (props: Props) => {
   }
 
   return (
-    <div className="absolute w-2/3 rounded-xl left-1/2 top-[45%] -translate-x-1/2 -translate-y-[45%]">
+    <div className="absolute w-full px-8 md:px-0 md:w-[90%] lg:w-2/3 rounded-xl left-1/2 top-[20%] md:top-[45%] -translate-x-1/2 -translate-y-[20%] md:-translate-y-[45%]">
       {!videoData.data ? (
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="w-full space-y-6 flex flex-col "
           >
-            <h1 className="text-4xl text-center mb-10">
+            <h1 className="text-3xl md:text-4xl text-center mb-10">
               Download Tiktok Videos in HD quality
             </h1>
             <FormField
@@ -93,7 +101,7 @@ const DownloadForm = (props: Props) => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-[160px] mx-auto h-12 text-sm font-bold "
+              className="w-[160px] mx-auto h-12 text-md font-bold"
             >
               {!!isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Get Video

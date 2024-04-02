@@ -2,6 +2,7 @@ import Image from "next/image";
 import Header from "./(component)/Header";
 import DownloadForm from "./(component)/DownloadForm";
 import { Toaster } from "@/components/ui/toaster";
+import Footer from "./(component)/Footer";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         <div className="h-full relative">
           <DownloadForm />
         </div>
+        <Footer />
       </div>
       <Toaster />
     </main>
