@@ -48,6 +48,23 @@ const tiktokDownloader = async (
       body: JSON.stringify(params),
       redirect: "follow",
     });
+
+    // error handling
+    if (!response.ok) {
+      switch (response.status) {
+        case 400:
+          throw new Error("Bad request");
+        case 404:
+          throw new Error("Link not found");
+        case 422:
+          throw new Error("Unprocessable entity");
+        case 500:
+          throw new Error("Internal server error");
+        default:
+          throw new Error("Something unknown happened");
+      }
+    }
+
     const videoObj = await response.json();
     const videoDetails: TiktokObj = videoObj.data;
 
@@ -79,6 +96,9 @@ const tiktokDownloader = async (
       },
     };
   } catch (err) {
+    if ((err as Error)?.message === "Network Error") {
+      throw Error("Please check your internet connection");
+    }
     throw Error("Something unknown happened");
   }
 };
