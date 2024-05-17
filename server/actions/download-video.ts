@@ -67,6 +67,7 @@ const tiktokDownloader = async (
 
     const videoObj = await response.json();
     const videoDetails: TiktokObj = videoObj.data;
+    console.log(videoDetails);
 
     if (!videoDetails?.play) {
       return {
