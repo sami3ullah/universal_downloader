@@ -22,6 +22,32 @@ type Props = {
   videoData: TiktokClientResponse;
 };
 
+interface Window {
+  showSaveFilePicker?: (
+    options?: SaveFilePickerOptions
+  ) => Promise<FileSystemFileHandle>;
+}
+
+interface SaveFilePickerOptions {
+  suggestedName?: string;
+  types?: FilePickerAcceptType[];
+  excludeAcceptAllOption?: boolean;
+}
+
+interface FilePickerAcceptType {
+  description?: string;
+  accept: Record<string, string[]>;
+}
+
+interface FileSystemFileHandle {
+  createWritable: () => Promise<FileSystemWritableFileStream>;
+}
+
+interface FileSystemWritableFileStream {
+  write: (data: Blob | BufferSource | string) => Promise<void>;
+  close: () => Promise<void>;
+}
+
 const VideoActions = ({ videoData }: Props) => {
   const [isLoading, setIsLoading] = React.useState({
     "download-hd": false,
@@ -33,22 +59,71 @@ const VideoActions = ({ videoData }: Props) => {
 
   const downloadVideo = async (url: string, buttonId: string) => {
     try {
-      // setting the isLoading state for only the button on which we clicked on
+      // Set the isLoading state for the clicked button
       setIsLoading((prev) => ({
         ...prev,
         [buttonId]: true,
       }));
-      // making the url downloadable
-      const res = await fetch(url);
-      const file = await res.blob();
-      let tempUrl = URL.createObjectURL(file);
-      const aTag = document.createElement("a");
-      aTag.href = tempUrl;
-      aTag.download = url.replace(/^.*[\\\/]/, "");
-      document.body.appendChild(aTag);
-      aTag.click();
-      URL.revokeObjectURL(tempUrl);
-      aTag.remove();
+
+      // Check if the File System Access API is available
+      if (!window.showSaveFilePicker) {
+        throw new Error(
+          "File System Access API is not supported in this browser."
+        );
+      }
+
+      // Prompt the user to choose a location to save the file
+      const fileHandle = await window.showSaveFilePicker({
+        suggestedName: url.replace(/^.*[\\\/]/, ""),
+        types: [
+          {
+            description: "Video file",
+            accept: {
+              "video/mp4": [".mp4"],
+            },
+          },
+        ],
+      });
+
+      const writableStream = await fileHandle.createWritable();
+
+      // Fetch the file as a stream
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch the file");
+      }
+
+      // Get a readable stream from the response
+      const readableStream = response.body;
+
+      // Ensure the writableStream and readableStream are not null
+      if (!readableStream || !writableStream) {
+        throw new Error("Stream creation failed");
+      }
+
+      // Create a reader from the readable stream
+      const reader = readableStream.getReader();
+
+      // Stream the data to the file
+      const streamPump = async () => {
+        const pump = async ({ done, value }) => {
+          if (done) {
+            await writableStream.close();
+            return;
+          }
+          await writableStream.write(value);
+          return reader.read().then(pump);
+        };
+        return reader.read().then(pump);
+      };
+
+      await streamPump();
+
+      toast({
+        title: "Download complete",
+        description: "The file has been downloaded successfully.",
+        variant: "success",
+      });
     } catch (err) {
       toast({
         title: (err as Error).message,
